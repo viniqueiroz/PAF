@@ -1,0 +1,28 @@
+<div class="card card-container">
+{{errMsg}}
+  <form >
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastro de Fornecedores</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="unidade"> Novo Fornecedor: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="fornecedor" ng-model="fornecedor.fornecedor">
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastrarFornecedor()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/fornecedor">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>

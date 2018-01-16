@@ -1,0 +1,39 @@
+<div class="card card-container">
+
+  <form action="" method="post">
+
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastro de unidade de medidas</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="unidade"> Descrição: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="unidadeMedida" ng-model="unidadeMedida.descricao">
+            <!--<input type="text" name="unidade" size="10">-->
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="unidade"> Sigla: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder=""  name="unidadeMedida" ng-model="unidadeMedida.sigla">
+            <!--<input type="text" name="unidade" size="10">-->
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastroUnidade()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/unidade">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>

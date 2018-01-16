@@ -1,0 +1,59 @@
+<div class="container">
+   <h4>Quantitativo de Peças Cadastrados</h4>
+    <div class="row" ng-hide="!personalDetails.length">
+        <div class="col-md-10">
+          <div class="well">
+          <label><input type="text"class="form-control" ng-model="criteria" placeholder="Buscar...">
+          </label>
+           </div>
+            <table class="table table-striped table-bordered" ng-table ="usersTable">
+                <thead>
+                    <tr>
+                        <th width=3%><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                        <th ng-click="ordenar('codigo')">Código</th>
+                        <th ng-click="ordenar('nome')">Nome</th>
+                        <th ng-click="ordenar('volumeUnitario')">Volume Unitário</th>
+                          <th ng-click="ordenar('comprimento')">Comprimento</th>
+                            <th ng-click="ordenar('secao')">Seção</th>
+                              <th ng-click="ordenar('peso')">Peso</th>
+                                <th ng-click="ordenar('agrupamento')">Agrupamento</th>
+                                  <th ng-click="ordenar('projeto')">Projeto</th>
+                                    <th ng-click="ordenar('revisão')">Revisão</th>
+                                      <th ng-click="ordenar('fragmentacao')">Fragmentação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="quantitativo in quantitativoPecas | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:8">
+                        <td>
+                            <input type="checkbox" ng-model="peca.selected"/>
+                        </td>
+                        <td>{{quantitativo.codigo}}</td>
+                        <td>{{quantitativo.nome}}</td>
+                        <td>{{quantitativo.volmeUnitario}}</td>
+                        <td>{{quantitativo.comprimento}}</td>
+                        <td>{{quantitativo.secao}}</td>
+                        <td>{{quantitativo.peso}}</td>
+                        <td>{{quantitativo.agrupamento}}</td>
+                        <td>{{quantitativo.projeto}}</td>
+                        <td>{{quantitativo.revisao}}</td>
+                        <td>{{quantitativo.fragmentacao}}</td>
+
+                        <td align="center" width=5%><p  title="Edit"><button class="btn btn-primary btn-xs" ng-click="getQuantitativoPeca(quantitativo)" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="8" boundary-links="true"></dir-pagination-controls>
+            <div class="form-group">
+                <a href="#!/cadastroQuantitativoPecas">
+                  <button type="button" class="btn btn-primary">Cadastrar</button>
+                </a>
+                <a href="#!/editarQuantitativoPecas">
+                  <button type="button" class="btn btn-primary">Editar</button>
+                </a>
+
+                <input type="button" class="btn btn-danger " ng-click="removerQuantitativoPeca()" value="Remover">
+
+        </div>
+    </div>
+<br />
+</div>

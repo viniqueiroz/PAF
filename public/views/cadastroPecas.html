@@ -1,0 +1,39 @@
+<div class="container">
+  <h4>Cadastro de Conjunto de Peças</h4>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form ng-submit="">
+                      <h4>Dados do Grupo:</h4>
+                        <div class="form-group" >
+                          <select class="form-control" name="obraCliente" style="max-width:20%;" ng-model="obra.cliente_id">
+                            <option ng-repeat="cliente in clientes" value="{{cliente.id}}">{{cliente.nome}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group" >
+                          <select class="form-control" name="obraCliente" style="max-width:20%;" ng-model="obra.cliente_id">
+                            <option ng-repeat="cliente in clientes" value="{{cliente.id}}">{{cliente.nome}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Consumo de Espaçadores (UND/M³)" ng-model="projeto." required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Consumo de Arame (KG/M³)" ng-model="projeto." required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Valor de Venda (R$/M³)" ng-model="projeto." required>
+                        </div>
+                        <div class="clearfix">
+                            <button type="button" ng-click="cadastroPeca()" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
+                            <input type="reset" value="Limpar" class="btn btn-primary">
+                            <a href="#!/pecas">
+                              <button type="button" class="btn btn-primary">Cancelar</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

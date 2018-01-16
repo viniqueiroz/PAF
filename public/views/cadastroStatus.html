@@ -1,0 +1,29 @@
+<div class="card card-container">
+  {{errMsg}}
+  <form >
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastrar Status</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="status"> Descrição: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="status" ng-model="status.nomeStatus">
+            <!--<input type="text" name="status" size="20">-->
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastrarStatus()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/status">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>

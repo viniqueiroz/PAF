@@ -1,0 +1,28 @@
+<div class="card card-container">
+  <form action="" method="post">
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastro de Setores</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="setor"> Setor: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="setor" ng-model="setor.nomeSetor">
+            <!--<input type="text" name="status" size="20">-->
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastrarSetor()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/setor">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>

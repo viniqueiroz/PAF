@@ -1,0 +1,40 @@
+<div class="container">
+<h4>Editar Usuário</h4>
+<div class="row">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form ng-submit="addNew(personalDetails)">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Novo nome" ng-model="personalDetails.fname" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Novo sobrenome" ng-model="personalDetails.lname" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Novo email" ng-model="personalDetails.email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Nova senha">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Confirmar nova senha">
+                    </div>
+                    <div class="form-group">
+                      <b>Tipo de usuário:</b>
+                      <label class="radio-inline"><input type="radio" name="optradio" required>Administrador</label>
+                      <label class="radio-inline"><input type="radio" name="optradio" required>Funcionário</label>
+                    </div>
+                    <div class="clearfix">
+                        <input type="submit" value="Salvar" class="btn btn-primary">
+                        <input type="reset" value="Limpar" class="btn btn-primary">
+                        <a href="#!/usuario">
+                          <button type="button" class="btn btn-primary">Cancelar</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

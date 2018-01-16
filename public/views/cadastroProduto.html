@@ -1,0 +1,28 @@
+<div class="card card-container">
+{{errMsg}}
+  <form >
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastro de Produtos</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="unidade"> Novo Produto:  </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="produto" ng-model="produto.produto">
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastrarProduto()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/produto">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>

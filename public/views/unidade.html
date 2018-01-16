@@ -1,0 +1,67 @@
+<div class="container">
+   <h4>Unidades de Medida Cadastradas</h4>
+    <div class="row" ng-hide="!unidadesMedida.length">
+        <div class="col-md-10">
+          <div class="well">
+          <label><input type="text"class="form-control" ng-model="criteria" placeholder="Buscar...">
+          </label>
+           </div>
+            <table class="table table-striped table-bordered" ng-table ="unidadesTable">
+                <thead>
+                    <tr>
+                        <th width=3%><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                        <th ng-click="ordenar('descricao')">Unidades</th>
+                        <th ng-click="ordenar('sigla')">Sigla</th>
+                        <!-- <th>Editar</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="unidadeMedida in unidadesMedida | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:8">
+                        <td>
+                            <input type="checkbox" ng-model="unidadeMedida.selected"/></td>
+                        <td>{{unidadeMedida.descricao}}</td>
+                        <td>{{unidadeMedida.sigla}}</td>
+                        <td align="center" width=5%><p  title="Edit"><button class="btn btn-primary btn-xs" ng-click="getUnidade(unidadeMedida)" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="8" boundary-links="true"></dir-pagination-controls>
+            <div class="form-group">
+                <a href="#!/cadastroUnidade">
+                  <button type="button" class="btn btn-primary">Cadastrar</button>
+                </a>
+                <!-- <a href="#!/editarUnidade">
+                  <button type="button" class="btn btn-primary">Editar</button>
+                </a> -->
+                <input type="button" class="btn btn-danger " ng-click="removerUnidade()" value="Remover">
+            </div>
+        </div>
+    </div>
+<br />
+</div>
+
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Editar Unidade de Medidas </h4>
+      </div>
+          <div class="modal-body">
+          <div class="form-group">
+          <input class="form-control " type="text" ng-model="unidade.descricao" value="{{unidade.descricao}}" name="unidade.descricao" required></input>
+          <br>
+          <input class="form-control " type="text" ng-model="unidade.sigla" value="{{unidade.sigla}}" name="unidade.sigla" required></input>
+          </div>
+
+      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" ng-click="editarUnidade(unidade)" data-dismiss="modal">Salvar</button>
+        </div>
+      </div>
+    <!-- /.modal-content -->
+  </div>
+      <!-- /.modal-dialog -->
+    </div>

@@ -1,0 +1,20 @@
+
+            <div id="loginStyle" align="center" class="card card-container2 ">
+                <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+                <img id="profile-img"class="profile-img-card" src="img/login.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                <form name="form1" ng-controller="loginCtrl" ng-submit="logar()">
+                    <span id="reauth-email" class="reauth-email"></span>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" name="email" ng-model="user.email" required autofocus>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" ng-model="user.senha" required>
+                    <div id="remember" class="checkbox">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Lembrar-me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Logar</button>
+                </form><!-- /form -->
+                <a href="#" class="forgot-password">
+                    Esqueceu a senha?
+                </a>
+            </div><!-- /card-container -->

@@ -1,0 +1,40 @@
+<!--  HEAD -->
+<div class="container">
+  <h4>Cadastro de Usuário</h4>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form ng-submit="cadastrar()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Nome" ng-model="usuario.nome" required>
+                        </div>
+                        <!-- <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Sobrenome" ng-model="user.lname" required>
+                        </div> -->
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" ng-model="usuario.email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Senha" ng-model="usuario.senha" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Confirmar senha" ng-model="usuario.cosenha" >
+                        </div>
+                        <div class="form-group" >
+                          <b>Tipo de usuário:</b>
+                          <label class="radio-inline"><input type="radio" value=1 name="optradio"  ng-model="usuario.tipo" required>Administrador</label>
+                          <label class="radio-inline"><input type="radio" value=2 name="optradio" ng-model="usuario.tipo" required>Funcionário</label>
+                        </div>
+                        <div class="clearfix">
+                            <input type="submit" value="Cadastrar" class="btn btn-primary" ng-click="cadastroUsuario()">
+                            <input type="reset" value="Limpar" class="btn btn-primary">
+                            <a href="#!/usuario">
+                              <button type="button" class="btn btn-primary">Cancelar</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

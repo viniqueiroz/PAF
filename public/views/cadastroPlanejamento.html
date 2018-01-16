@@ -1,0 +1,131 @@
+
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <div class="row">
+
+
+                <div class="col-md-10 offset-md-1">
+                    <span class="anchor" id="formComplex"></span>
+
+                    <h3>Cadastrar Planejamento</h3>
+
+                    <!-- form complex example -->
+                    <form>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-3 pb-3">
+                              <label for="exampleAccount">Data:</label>
+                            <input type="date" class="form-control" id="exampleAccount"ng-model="planejamento.dataPlanejamento" placeholder="XXXXXXXXXXXXXXXX">
+                        </div>
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleCtrl">Hora:</label>
+                            <input type="time" class="form-control" id="exampleCtrl" ng-model="planejamento.horaPlanejamento" placeholder="0000">
+                        </div>
+                        <div class="col-sm-3 pb-3">
+                          <label for="exampleAmount">OS/PO/Remessa</label>
+                          <input type="text" class="form-control" id="exampleAmount" ng-model="planejamento.os_po_remessa" placeholder="OS/PO/Remessa">
+                        </div>
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleSt">Movimentação:</label>
+                            <select class="form-control" id="exampleSt" ng-model="planejamento.idMovimentacao">
+                              <option disabled selected value style="display:none"> Selecione uma Opção </option>
+                                <option value="1">EXPEDIÇÃO</option>
+                                <option value="2">RECEBIMENTO</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleStt">Categoria:</label>
+                            <select class="form-control" id="exampleStt" ng-model="planejamento.idCategoria">
+                              <option disabled selected value style="display:none"> Selecione uma Opção </option>
+                                <option ng-repeat="categoria in categorias" value="{{categoria.id}}">{{categoria.categoria}}</option>
+                              </select>
+                        </div>
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleSttt">Fornecedor:</label>
+                            <select class="form-control" id="exampleSttt" ng-model="planejamento.idFornecedor">
+                                <option disabled selected value style="display:none"> Selecione uma Opção </option>
+                                <option ng-repeat="fornecedor in fornecedores" value="{{fornecedor.id}}">{{fornecedor.fornecedor}}</option>
+
+                            </select>
+                        </div>
+                        <div class="col-sm-3 pb-3">
+                            <label for="produto">Produto:</label>
+                            <select class="form-control" id="produto" ng-model="planejamento.idProduto">
+                                <option disabled selected value style="display:none"> Selecione uma Opção </option>
+                                <option ng-repeat="produto in produtos" value="{{produto.id}}">{{produto.produto}}</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleSt5">Transportadora:</label>
+                            <select class="form-control" id="exampleSt5" ng-model="planejamento.idTransportadora">
+                                 <option disabled selected value style="display:none"> Selecione uma Opção </option>
+                                 <option ng-repeat="transportadora in transportadoras" value="{{transportadora.id}}">{{transportadora.transportadora}}</option>
+
+                            </select>
+                        </div>
+
+
+                        <div class="col-sm-4 pb-3 ">
+                          <label for="exampleZip">Quantidade</label>
+                          <div class="input-group ">
+                            <input type="text" class="form-control" id="exampleZip" placeholder="Quantidade" ng-model="planejamento.quantidade" required>
+                            <div class="input-group-addon">Kg</div>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-2 pb-3">
+                            <label for="exampleSt6">Area:</label>
+                            <select class="form-control" id="exampleSt6" ng-model="planejamento.idArea">
+                              <option disabled selected value="" style="display:none"> Selecione</option>
+                                <option value="1">CP</option>
+                                <option value="2">EM</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 pb-3 ">
+                          <label for="exampleZip2">Ordem:</label>
+                          <input type="number" class="form-control" id="exampleZip2" placeholder="0000" ng-model="planejamento.ordem">
+                        </div>
+
+                        <div class="col-sm-3 pb-3">
+                            <label for="exampleSt">Status:</label>
+                            <fieldset disabled>
+                            <select class="form-control" id="exampleSt" >
+                                <option value="1">PENDENTE</option>
+                            </select>
+                          </fieldset>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-6 pb-3">
+                            <label for="exampleMessage">Observações:</label>
+                            <input type="text" class="form-control" id="exampleMessage" ng-model="planejamento.observacao">
+                            <small class="text-muted">
+                              Informações referentes ao planejamento.
+                            </small>
+                    </div>
+                   </div>
+                   <div class="clearfix">
+                       <button type="button" ng-click="cadastrarPlanejamento()" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
+                       <input type="reset" value="Limpar" class="btn btn-primary">
+                       <a href="#!/planejamento">
+                         <button type="button" class="btn btn-primary">Cancelar</button>
+                       </a>
+                   </div>
+
+</form>
+            </div>
+            <!--/row-->
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->

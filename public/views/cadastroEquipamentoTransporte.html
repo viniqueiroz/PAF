@@ -1,0 +1,28 @@
+<div class="card card-container">
+  <form action="" method="post">
+    <br />
+    <!-- usuario -->
+    <fieldset>
+      <legend>
+        <h4>Cadastro de equipamento de transporte</h4></legend>
+      <table cellspacing="10">
+
+        <tr>
+          <td>
+            <label for="equipamento"> Equipamento: </label>
+          </td>
+          <td align="left">
+            <input type="text" class="form-control" placeholder="" name="equipamentoTransporte" ng-model="equipamentoTransporte.nomeEquip">
+            <!--<input type="text" name="status" size="20">-->
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+
+    <button class="btn btn-primary" type="button" ng-click="cadastrarEquipamentoTransporte()">Cadastrar</button>
+    <button class="btn btn-primary" type="reset" value="Limpar">Limpar </button>
+    <a href="#!/equipamentoTransporte">
+      <button type="button" class="btn btn-primary">Cancelar</button>
+    </a>
+</div>
