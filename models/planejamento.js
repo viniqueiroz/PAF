@@ -7,6 +7,7 @@ var transportadora = require('./transportadora');
 var movimentacao = require('./movimentacao');
 var unidadeMedida = require('./unidadeMedida');
 var area = require('./area');
+var registroOperacional = require('./registroOperacional');
 
 var Planejamento = bookshelf.Model.extend({
   tableName: 'planejamento',
@@ -24,6 +25,15 @@ var Planejamento = bookshelf.Model.extend({
   },
   transportadora: function(){
     return this.belongsTo(transportadora,'idTransportadora');
+  },
+  area: function(){
+    return this.belongsTo(area,'idArea');
+  },
+  movimentacao: function(){
+    return this.belongsTo(movimentacao,'idMovimentacao');
+  },
+  registroOperacional: function(){
+    return this.belongsTo(registroOperacional,'idRegistroOperacional');
   }
 });
 

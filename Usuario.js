@@ -16,7 +16,7 @@ RoutUsuario.post('/auth', function(req, res) {
   if(email != null) {
     email = email[0];
     usuariof.find('all', {
-      fields: ['email', 'idUsuario', 'senha', 'nome'],
+      fields: ['email', 'idUsuario', 'senha', 'nome','idPrivilegio'],
       where: "email=\"" + email + "\""
     }, function(err, rows, fields) {
 
@@ -25,7 +25,8 @@ RoutUsuario.post('/auth', function(req, res) {
       if(rows[0]) {
         user = {
           id: rows[0].idUsuario,
-          nome: rows[0].nome
+          nome: rows[0].nome,
+          idPrivilegio: rows[0].idPrivilegio
         };
       }
       if(!user) {
@@ -48,7 +49,7 @@ RoutUsuario.post('/auth', function(req, res) {
           var token = jwt.sign(user, dbfun.secret, {
             expiresIn: 24 * 60 * 60 * 1 // Expira em 1 hours
           });
-
+//req.session.user=user;
           res.json({
             status: true,
             message: 'Token Gerada',
@@ -65,6 +66,10 @@ RoutUsuario.post('/auth', function(req, res) {
       message: 'Usuário Não Encontrado'
     });
   }
+});
+
+RoutUsuario.get('/logout', function(req, res) {
+  res.status(200).send({ auth: false, token: null });
 });
 
 RoutUsuario.use(function(req, res, next) {

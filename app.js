@@ -4,7 +4,7 @@
 //Express é a framework utilizado para o Back-End.
 const express = require('express');
 const app = express();
-
+var session = require('express-session');
 //Usado para manipulação do Body.
 const bodyParser = require('body-parser')
 const routes = require('./routes');
@@ -14,6 +14,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
 
 
 //Ferramenta para proteger aplicação.
@@ -30,30 +35,7 @@ const l = require('./Log.js');
 var Usuario = require('./Usuario');
 app.use('/usuario', Usuario);
 
-// ===========  Separação em modulos  =========== //
 
-// var Parametrizacao = require('./Parametrizacao');
-// app.use('/parametrizacao', Parametrizacao)
-//
-// var Comercial = require('./Comercial');
-// app.use('/comercial', Comercial)
-//
-// var Expedicao = require('./Expedicao');
-// app.use('/expedicao', Expedicao)
-//
-// var Pcp = require('./Pcp');
-// app.use('/pcp', Pcp)
-//
-// var Projetos = require('./Projetos');
-// app.use('/projetos', Projetos)
-//
-// var Qualidade = require('./Qualidade');
-// app.use('/qualidade', Qualidade)
-//
-// var Suprimentos = require('./Suprimentos');
-// app.use('/suprimentos', Suprimentos)
-
-// ===========  Separação em modulos  =========== //
 
 
 //Permite Acesso externo na aplicação
@@ -64,7 +46,7 @@ app.use(function(req, res, next) {
 });
 
 
-//Pasta utilizada para o frontEnd vai ser a pasta WWW
+//Pasta utilizada para o frontEnd vai ser a pasta public
 app.use('/', express.static(__dirname + '/public'));
 
 

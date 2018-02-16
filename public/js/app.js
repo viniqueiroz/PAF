@@ -1,6 +1,6 @@
 'use strict';
 // Nesse arquivo nós listamos todos as extensões do angular necessárias para funcionamento
-angular.module('IBPC', ['angular-jwt', 'ngRoute', 'controllers', 'services', 'routes', 'angularUtils.directives.dirPagination'])
+angular.module('SOL', ['angular-jwt', 'ngRoute', 'controllers', 'services', 'routes', 'angularUtils.directives.dirPagination','angularMoment'])
 
   .run(function($location) {
     if(window.localStorage.getItem('ngStorage-token') == null) {

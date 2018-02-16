@@ -2,6 +2,7 @@ angular.module('services', [])
 
   .factory('API', ['$http', function($http, $httpProvider) {
     var baseUrl = "http://localhost:3000"; //"http://192.168.1.104:3300"
+    $http.defaults.headers.common['x-access-token'] = JSON.parse(localStorage.getItem('ngStorage-token'));
     var dataPushed=[];
     return {
 
@@ -360,23 +361,65 @@ cadastroPlanejamento: function(data, success, error) {
    return response.data;
       });
 },
+getPlanejamentos: function(data, success, error) {
+   return  $http.get(baseUrl + '/planejamento', data).then(function (response) {
+   return response.data;
+      });
+},
+/// Retorna o cliente que vai preencher a subtela de edição
+ getPlanejamentosByStatus: function(data) {
+  return  $http.get(baseUrl + '/planejamento/status/'+data).then(function (response) {
+    return response.data;
+       });
+ },
+
+ getPlanejamento: function(data) {
+  return  $http.get(baseUrl + '/planejamento/'+data).then(function (response) {
+console.log(response.data);
+    return response.data;
+       });
+ },
+ editarPlanejamento: function(data) {
+  return  $http.put(baseUrl + '/planejamento/'+data.id,data).then(function (response) {
+     return response.data;
+        });
+  },
 
 //////// PLANEJAMENTO - FIM
+
+//////// REGISTRO OPERACIONAL - INICIO
+
+/// Transfere os dados para cadastro de um usuario
+cadastroOperacional: function(data, success, error) {
+   return  $http.post(baseUrl + '/operacional', data).then(function (response) {
+   return response.data;
+      });
+},
+getRegistrosOperacionais: function(data, success, error) {
+   return  $http.get(baseUrl + '/operacional', data).then(function (response) {
+   return response.data;
+      });
+},
+
+//////// REGISTRO OPERACIONAL - FIM
 
 
       ////////////////////////////////////////////////
 
-      pushData: function(data) {
-        dataPushed.length = 0;
-        dataPushed.push(data);
-        console.log(dataPushed);
+      pushData: function(key,data) {
+      sessionStorage.setItem(key,data);
       },
-      getData: function(data) {
-        return dataPushed ;
+      getData: function(key) {
+      return sessionStorage.getItem(key);
+        //return dataPushed ;
       },
       logout: function() {
-        window.localStorage.clear();
-        window.location = "#/";
+          $http.get(baseUrl + '/usuario/logout', data).then(function (response) {
+          window.localStorage.clear();
+          window.location = "#/";
+
+           });
+
       }
 
     };

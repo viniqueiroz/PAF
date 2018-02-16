@@ -32,10 +32,11 @@ angular.module('controllers', [])
 
 
 
-    // $scope.pushData = function(data) {
-    //
-    //   API.pushData(data);
-    // }
+
+     $scope.pushData = function(data) {
+
+       API.pushData(data);
+    }
     //
     //
     // API.getAllClientsPej().then(function(clients) {
@@ -893,6 +894,10 @@ angular.module('controllers', [])
       //console.log(data);
     });
 
+API.getPlanejamentos().then(function(data){
+$scope.planejamentos = data ;
+
+});
 
 
     $scope.cadastrarPlanejamento = function() { /// Cadastra um novo grupo
@@ -914,6 +919,125 @@ angular.module('controllers', [])
 
         } else {
           console.log("Erro ao adicionar Planejameto")
+        }
+      }, function(err) {
+        console.log(err)
+      })
+    }
+
+
+
+  }])
+
+
+  // Controller responsavel pela página de Planejamento
+  .controller('operacionalCtrl', ['jwtHelper','$rootScope', '$scope', 'API', '$window', function(jwtHelper,$rootScope, $scope, API, $window) {
+var keyCtrl = 'operacional';
+    $scope.selectedRow = null;  // initialize our variable to null
+      $scope.setClickedRow = function(index){  //function that sets the value of selectedRow to current index
+         $scope.selectedRow = index;
+            }
+
+
+
+
+API.getPlanejamentosByStatus(2).then(function(data){
+$scope.planejamentosPendentes = data ;
+
+});
+
+$scope.registrarOperacao = function(data) { /// Cadastra um novo grupo
+  API.pushData(keyCtrl,data);
+}
+
+
+
+
+
+    $scope.cadastrarRegistroOperacional = function() { /// Cadastra um novo grupo
+      key = window.localStorage.getItem('ngStorage-token')
+      key = key.replace("\"", "").replace("\"", "");
+      keydec = jwtHelper.decodeToken(key);
+      var registroOperacional = $scope.registroOperacional //Recebe os dados da view
+      console.log(registroOperacional);
+      registroOperacional.idUserInicio= keydec.id ;
+      registroOperacional.idPlanejamento= API.getData();
+      API.cadastroRegistroOpereacional(registroOperacional).then(function(res) {
+        if(res.status) {
+          console.log("Registro Operacional Cadastrado")
+          alert(res.message);
+          $window.location.reload();
+
+
+        } else {
+          console.log("Erro ao adicionar Registro Operacional")
+        }
+      }, function(err) {
+        console.log(err)
+      })
+    }
+
+
+
+  }])
+
+  // Controller responsavel pela página de Planejamento
+  .controller('cadastroOperacionalCtrl', ['jwtHelper','$rootScope', '$scope', 'API', '$window','moment', function(jwtHelper,$rootScope, $scope, API, $window,moment) {
+    var keyCtrl = 'operacional';
+
+var planId = API.getData(keyCtrl);
+API.getPlanejamento(planId).then(function(response){
+$scope.planejamentoARegistrar=response;
+
+});
+
+API.getTransportadoras().then(function(response){
+$scope.transportadoras=response;
+
+});
+API.getStatus().then(function(response){
+$scope.allStatus=response;
+});
+
+$scope.tempoOp = function() {
+        var duracaoH= moment($scope.registroOperacional.horaSaida).diff(moment($scope.registroOperacional.horaEntrada));
+        var duracaoD= moment($scope.registroOperacional.dataSaida).diff(moment($scope.registroOperacional.dataEntrada));
+        var somaTotal = moment.duration(duracaoH+duracaoD);
+          $scope.registroOperacional.tempoOperacao = Math.floor(somaTotal.asHours()) + moment.utc(somaTotal.asMilliseconds()).format(":mm");
+                            };
+
+  $scope.pesoEst = function(){
+
+      $scope.registroOperacional.pesoEstimado =$scope.registroOperacional.pesoEntrada+$scope.registroOperacional.pesoSaida;
+  };
+
+
+$scope.pesoFinal = 1000 ;
+
+
+
+    $scope.cadastrarRegistroOperacional = function() { /// Cadastra um novo grupo
+      key = window.localStorage.getItem('ngStorage-token')
+      key = key.replace("\"", "").replace("\"", "");
+      keydec = jwtHelper.decodeToken(key);
+      var registroOperacional = $scope.registroOperacional //Recebe os dados da view
+      console.log(registroOperacional);
+      registroOperacional.idUserOpInicio= keydec.id ;
+      registroOperacional.idPlanejamento= $scope.planejamentoARegistrar.id;
+      API.cadastroOperacional(registroOperacional).then(function(res) {
+        if(res.status) {
+          var planejamentoARegistrar = $scope.planejamentoARegistrar;
+          planejamentoARegistrar.idRegistroOperacional = res.operacionalId;
+          API.editarPlanejamento(planejamentoARegistrar).then(function(resP){
+            console.log("Registro Operacional Cadastrado")
+            alert(res.message);
+            $window.location.reload();
+          });
+
+
+
+        } else {
+          console.log("Erro ao adicionar Registro Operacional")
         }
       }, function(err) {
         console.log(err)
@@ -996,7 +1120,7 @@ angular.module('controllers', [])
           document.getElementById('menu').style.visibility = "visible";
           document.getElementById('wrapper').style.backgroundColor="#f8f8f8";
           location.replace('#/'); //Redireciona para a pag inicial
-          // location.reload(); //Att a pag
+          location.reload(); //Att a pag
         } else {
           console.log("Login/Senha incorretos");
           if(!status){alert(data.message)}

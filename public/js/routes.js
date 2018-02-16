@@ -81,6 +81,18 @@ angular.module('routes', [])
         templateUrl: "/views/cadastroPlanejamento.html", // view a ser utilizada
         controller: "planejamentoCtrl" // Controlador a ser utilizado
       })
+      .when("/planejamento", { //Endereço a ser digitado
+        templateUrl: "/views/planejamento.html", // view a ser utilizada
+        controller: "planejamentoCtrl" // Controlador a ser utilizado
+      })
+      .when("/cadastroOperacional", { //Endereço a ser digitado
+        templateUrl: "/views/cadastroOperacional.html", // view a ser utilizada
+        controller: "cadastroOperacionalCtrl" // Controlador a ser utilizado
+      })
+      .when("/operacional", { //Endereço a ser digitado
+        templateUrl: "/views/operacional.html", // view a ser utilizada
+        controller: "operacionalCtrl" // Controlador a ser utilizado
+      })
 
       .when('/contato/:id', {
         templateUrl: "/views/contato.html",

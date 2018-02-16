@@ -1,0 +1,100 @@
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-10   offset-md-1"> <span class="anchor" id="formComplex"></span>
+          <h3>Cadastrar Registro Operacional</h3>
+          <!-- form complex example -->
+          <form>
+            <div class="row mt-4">
+              <div class="panel panel-default col-sm-5" style="padding-right: 15px; padding-bottom: 18px; margin-right: 10px;"> <label>Entrada</label>
+                <div class="row ">
+                  <div class="col-sm-6 pb-3" id="entrada"> <label for="exampleAccount">Data:</label>
+                    <input type="date" class="form-control" id="exampleAccount" ng-model="registroOperacional.dataEntrada" placeholder="XXXXXXXXXXXXXXXX"> </div>
+                  <div class="col-sm-5 pb-3"> <label for="exampleCtrl">Hora:</label>
+                    <input type="time" class="form-control" id="exampleCtrl" ng-model="registroOperacional.horaEntrada"   placeholder="0000"> </div>
+                  <div class="col-sm-6 pb-3"> <label for="exampleZip3">Quantidade</label>
+                    <div class="input-group ">
+                      <input type="text" class="form-control" id="exampleZip3" placeholder="Quantidade" ng-change="pesoEst()" ng-model="registroOperacional.pesoEntrada" required="">
+                      <div class="input-group-addon">Kg</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default col-sm-5" style="padding-right: 15px; padding-bottom: 18px; margin-right: 5px;"> <label>Saida</label>
+                <div class="row ">
+                  <div class="col-sm-6 pb-3" id="entrada"> <label for="exampleAccount2">Data:</label>
+                    <input type="date" class="form-control" id="exampleAccount2" ng-model="registroOperacional.dataSaida" ng-change="tempoOp()" placeholder="XXXXXXXXXXXXXXXX"> </div>
+                  <div class="col-sm-5 pb-3"> <label for="exampleCtrl2">Hora:</label>
+                    <input type="time" class="form-control" id="exampleCtrl2" ng-model="registroOperacional.horaSaida" ng-change="tempoOp()" placeholder="0000"> </div>
+                  <div class="col-sm-6 pb-3"> <label for="exampleZip">Quantidade</label>
+                    <div class="input-group ">
+                      <input type="text" class="form-control" id="exampleZip" placeholder="Quantidade" ng-change="pesoEst()" ng-model="registroOperacional.pesoSaida" required="">
+                      <div class="input-group-addon">Kg</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 pb-3"> <label for="exampleAmount">Peso Estimado</label>
+                <input disabled="" type="text" class="form-control" id="exampleAmount" ng-model="registroOperacional.pesoEstimado"> </div>
+              <div class="col-sm-2 pb-3 col-md-1" style="
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
+"> <label for="exampleAmount2">Peso Final</label>
+                <input disabled="" type="text" class="form-control" id="exampleAmount2" ng-model="pesoFinal"> </div>
+              <div class="col-sm-2 pb-3 col-md-1offset-md-1"> <label for="exampleAmount3">Tempo Operação</label>
+                <input disabled="" type="text" class="form-control" id="exampleAmount3" ng-model="registroOperacional.tempoOperacao"> </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-2 pb-3"> <label for="exampleAmount4">Código </label>
+                <input disabled="" type="text" class="form-control" id="exampleAmount4" ng-model="planejamentoARegistrar.id" placeholder="{{planejamentoARegistrar.id}}"> </div>
+              <div class="col-sm-3 pb-3 "> <label for="exampleZip2">Quantidade</label>
+                <div class="input-group ">
+                  <input type="text" class="form-control" id="exampleZip2" placeholder="Quantidade" ng-model="planejamentoARegistrar.quantidade" ></input>
+                  <div class="input-group-addon">Kg</div>
+                </div>
+              </div>
+
+              <div class="col-sm-3 pb-3"> <label for="exampleAmount5">OS/PO/Remessa</label>
+                <input type="text" class="form-control" id="exampleAmount5" ng-model="planejamentoARegistrar.os_po_remessa" placeholder="OS/PO/Remessa">
+              </div>
+
+              <div class="col-sm-3 pb-3"> <label for="exampleSt5">Transportadora:</label>
+                <select class="form-control" id="exampleSt5" ng-model="planejamentoARegistrar.idTransportadora" ng-options="transportadora.id as transportadora.transportadora for transportadora in transportadoras ">
+                </select>
+              </div>
+
+              <div class="col-sm-3 pb-3"> <label for="exampleAmount6">Nota Fiscal</label>
+                <input type="text" class="form-control" id="exampleAmount6" ng-model="registroOperacional.notaFiscal" placeholder="Nota Fiscal"> </div>
+              <div class="col-sm-2 pb-3"> <label for="exampleAmount7">Placa</label>
+                <input type="text" class="form-control" id="exampleAmount7" ng-model="registroOperacional.placa" placeholder="Placa"> </div>
+              <div class="col-sm-3 pb-3"> <label for="exampleSt">Status:</label>
+               <select class="form-control" id="exampleSt" ng-model="planejamentoARegistrar.idStatus" ng-required="true" ng-options="status.id as status.nomeStatus for status in allStatus " >
+
+                            </select>
+
+              </div>
+
+              <div class="col-md-6 pb-3"> <label for="exampleMessage">Observações:</label>
+                <input type="text" class="form-control" id="exampleMessage" ng-model="planejamentoARegistrar.observacao"> <small class="text-muted">
+                              Informações referentes ao planejamento.
+                            </small> </div>
+            </div>
+            <div class="clearfix">
+              <button type="button" ng-click="cadastrarRegistroOperacional()" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
+              <input type="reset" value="Limpar" class="btn btn-primary">
+              <a href="#!/operacional">
+                <button type="button" class="btn btn-primary">Cancelar</button>
+              </a>
+            </div>
+          </form>
+        </div>
+        <!--/row-->
+      </div>
+      <!--/col-->
+    </div>
+    <!--/row-->
+  </div>

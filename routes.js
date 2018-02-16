@@ -18,6 +18,7 @@ module.exports = function(app) {
   var Status = require('./models/status');
   var Transportadora = require('./models/transportadora');
   var UnidadeMedida = require('./models/unidadeMedida');
+  var VerifyToken = require('./verifyToken');
 var moment = require('moment');
   //Criptografia da senha
   var sha1 = require('sha1');
@@ -122,7 +123,7 @@ app.get('/getUser/:usuario_id', function(req, res) {
 });
 
 //Essa funçao retorna os usuários cadastrados no banco de dados com os devidos campos listados
-app.get('/users', function(req, res) {
+app.get('/users', VerifyToken , function(req, res) {
   users = new dbfun.Usuario();
   users.query("SELECT u.idUsuario, u.nome, u.email, u.senha, u.idStatus, u.idPrivilegio, p.nomePrivilegio FROM usuario as u, privilegio as p where u.idPrivilegio=p.idPrivilegio", function(err, rows, fields) {
     if(err) throw err;
@@ -144,6 +145,7 @@ app.get('/users', function(req, res) {
 //  =================   STATUS CRUD - INÍCIO ===================
 
 app.get('/getStatus', function(req, res) { /// Retorna do banco todos os status cadastrados
+  console.log(req.session);
   status = new dbfun.Status();
   status.find('all', {
     fields: "id,nomeStatus",
@@ -668,7 +670,7 @@ app.delete('/fornecedor/:fornecedor_id', function(req, res) {   /// Deleta um de
 
 app.get('/planejamento', function(req, res) { /// Retorna do banco todos os clientes cadastrados
 
-  Planejamento.fetchAll({withRelated: ['status'], require: true}).then(function(planejamentos) {
+  Planejamento.fetchAll({withRelated: ['status','categoria','fornecedor','produto','area','movimentacao','transportadora','registroOperacional'], require: true}).then(function(planejamentos) {
     res.json(planejamentos);
   }).catch(function (err) {
     res.json(err);
@@ -695,17 +697,103 @@ req.body.horaPlanejamento= moment(req.body.horaPlanejamento).format('HH:mm  ');
   });
 });
 
- /* app.get('/produto/:produto_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
-  Produto.where({ id: req.params.produto_id }).fetch().then(function(produto) {
-    console.log(JSON.stringify(produto) );
-    res.json(produto);
+  app.get('/planejamento/:planejamento_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
+  Planejamento.where({ id: req.params.planejamento_id }).fetch().then(function(planejamento) {
+    //console.log(JSON.stringify(planejamento) );
+    res.json(planejamento);
+  });
+});
+
+app.get('/planejamento/status/:status_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
+Planejamento.query(function(qb) {
+  qb.where('idStatus', '<=', 3);
+}).fetchAll({withRelated: ['status','categoria','fornecedor','produto','area','movimentacao','transportadora'], require: true}).then(function(planejamentos) {
+  //console.log(JSON.stringify(planejamentos) );
+  res.json(planejamentos);
+}).catch(function (err) {
+  console.log(JSON.stringify(err));
+  res.json(err);
+});
+});
+
+
+app.put('/planejamento/:planejamento_id', function(req, res) { /// Edita um grupo a partir de seus dados
+
+  Planejamento.where({ id: req.params.planejamento_id }).fetch().then((planejamento)=> {
+    planejamento.save(req.body,{ method: 'update',patch: true}).then(function () {
+      res.json({
+        status: true,
+        message: 'Planejamento Atualizado'
+      });
+    }).catch(function (err) {
+      console.log(err);
+      res.json({
+        status: false,
+        message: 'Erro ao Atualizar Planejamento '
+      });
+    });
+  });
+
+});
+
+/*
+app.delete('/produto/:produto_id', function(req, res) {   /// Deleta um determinado grupo
+
+  Produto.where({ id: req.params.produto_id }).fetch().then((produtos)=> {
+    produtos.destroy().then(function () {
+      res.json({
+        status: true,
+        message: 'Produto Deletado'
+      });
+    }).catch(function (err) {
+      console.log(err);
+      res.json({
+        status: false,
+        message: 'Erro ao Deletar Produto '
+      });
+    });
+  });
+});
+*/
+//  =================   PLANEJAMENTO CRUD - FIM ===================
+
+
+//  =================   REGISTRO OPERACIONAL CRUD - INÍCIO ===================
+
+
+app.get('/operacional', function(req, res) { /// Retorna do banco todos os clientes cadastrados
+
+  RegistroOperacional.fetchAll({withRelated: ['planejamento','usuarioOpInicio','usuarioOpFinal'], require: true}).then(function(registros) {
+    res.json(registros);
+  }).catch(function (err) {
+    res.json(err);
+  });
+
+});
+
+app.post('/operacional', function(req, res) {   /// Cadastra um novo grupo
+
+  new RegistroOperacional(req.body).save().then(function(model) {
+    console.log('Novo Registro Operacional cadastrado');
+    res.json({
+      status: true,
+      message: 'Novo Registro Operacional cadastrado',
+      operacionalId: model.id
+    });
+    });
+});
+
+ app.get('/operacional/:operacional_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
+  RegistroOperacional.where({ id: req.params.produto_id }).fetch().then(function(produto) {
+    console.log(JSON.stringify(operacional) );
+    res.json(operacional);
   }).catch(function (err) {
     console.log(JSON.stringify(err));
     res.json(err);
   });
 });
 
-
+/*
 app.put('/produto/:produto_id', function(req, res) { /// Edita um grupo a partir de seus dados
 
   Produto.where({ id: req.params.produto_id }).fetch().then((produtos)=> {
@@ -743,10 +831,13 @@ app.delete('/produto/:produto_id', function(req, res) {   /// Deleta um determin
   });
 });
 */
-//  =================   PLANEJAMENTO CRUD - FIM ===================
+//  =================   REGISTRO OPERACIONAL CRUD - FIM ===================
 
 
+app.post('/logout', function(req, res) {   /// Deleta um determinado grupo
 
+  req.session.user=null;
+});
 
 
 
