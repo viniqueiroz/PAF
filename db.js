@@ -10,11 +10,11 @@ const mysqlModel = require('mysql-model');
 
 // Conexão com o banco de dados
 const connection = mysqlModel.createConnection({
-  host: 'us-cdbr-iron-east-05.cleardb.net',
-  user: 'b5d00f4459b4ea',
-  password:'1092bf8b',
+  host: 'rtzsaka6vivj2zp1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	',
+  user: 'xeu48ud78tim1j0r',
+  password:'e33y0q89bo4us7s4',
   connectionLimit: 1,
-  database: 'heroku_cdb686dbe85aff7'
+  database: 'ciyjrvz0tocudnkz'
 });
 
 
