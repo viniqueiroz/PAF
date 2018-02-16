@@ -61,6 +61,6 @@ app.use('/', express.static(__dirname + '/public'));
 
 routes(app);
 // Quando quiser rodar a aplicação sem especificar a porta use esse comando
- app.listen(process.env.PORT_APP, function() {
-     console.log('Rodando porta' + process.env.PORT_APP);
- });
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
