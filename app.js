@@ -4,7 +4,7 @@
 //Express é a framework utilizado para o Back-End.
 const express = require('express');
 const app = express();
-var session = require('express-session');
+var session = require('cookie-session');
 //Usado para manipulação do Body.
 const bodyParser = require('body-parser')
 const routes = require('./routes');
