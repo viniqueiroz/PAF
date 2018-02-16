@@ -10,11 +10,11 @@ const mysqlModel = require('mysql-model');
 
 // Conexão com o banco de dados
 const connection = mysqlModel.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password:'',
+  host: 'us-cdbr-iron-east-05.cleardb.net',
+  user: 'b5d00f4459b4ea',
+  password:'1092bf8b',
   connectionLimit: 1,
-  database: 'paf'
+  database: 'heroku_cdb686dbe85aff7'
 });
 
 
@@ -80,7 +80,7 @@ module.exports = {
     tableName: "statusUsuario"
   }),
 
-  
+
 
 
   secret: 'gtHnbE34.(fmj35_gh97_mBvTIn' //Colocar chave para ser utilizada na criptografia
