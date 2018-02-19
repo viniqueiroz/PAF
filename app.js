@@ -4,7 +4,7 @@
 //Express é a framework utilizado para o Back-End.
 const express = require('express');
 const app = express();
-var session = require('express-session');
+var session = require('cookie-session');
 //Usado para manipulação do Body.
 const bodyParser = require('body-parser')
 const routes = require('./routes');
@@ -65,6 +65,6 @@ routes(app);
 //     console.log('Rodando porta' + process.env.PORT_APP);
 // });
 
-app.listen(3000, function() {
-  console.log('Rodando porta 3000');
+app.listen(process.env.PORT || 3000, function(){
+console.log("Servior rodando na porta %d em modo %s", this.address().port, app.settings.env);
 });
