@@ -1,6 +1,6 @@
 'use strict';
 // Nesse arquivo nós listamos todos as extensões do angular necessárias para funcionamento
-angular.module('SOL', ['angular-jwt', 'ngRoute', 'controllers', 'services', 'routes', 'angularUtils.directives.dirPagination','angularMoment'])
+angular.module('SOL', ['angular-jwt', 'ngRoute', 'controllers', 'services', 'routes', 'angularUtils.directives.dirPagination','angularMoment','ngMask'])
 
   .run(function($location) {
     if(window.localStorage.getItem('ngStorage-token') == null) {
@@ -11,7 +11,6 @@ angular.module('SOL', ['angular-jwt', 'ngRoute', 'controllers', 'services', 'rou
 
     }
   })
-
 
 
 

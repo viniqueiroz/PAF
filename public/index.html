@@ -22,14 +22,18 @@
     <script src="js/dirPagination.js"></script>
     <script src="vendor/moment/moment.js"></script>
     <script src="vendor/angular-moment/angular-moment.js"></script>
+    <script src="lib/js/ngMask.min.js"></script>
+
 
 
 
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="vendor/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+      <script src="vendor/datatables/js/jquery.dataTables.js"></script>
     <script src="vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
   <!--  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>-->
     <!-- MetisMenu CSS -->
     <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -139,9 +143,9 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Registro Operacional<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
+                                <!--<li>
                                     <a href="#!/cadastroOperacional">Cadastrar Operação</a>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a href="#!/operacional">Operacional</a>
                                 </li>
@@ -166,11 +170,11 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Passagem de Turno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Opção 1</a>
+                                    <a href="#!/passagemTurno">Passagem de Turno</a>
                                 </li>
-                                <li>
-                                    <a href="#">Opção 2</a>
-                                </li>
+                              <!--  <li>
+                                    <a href="">Opção 2</a>
+                                </li>-->
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -233,9 +237,9 @@
                   <div class="form-group">
                     <input class="form-control " type="text" ng-model="user[0].nome" value="{{user[0].nome}}" name="user[0].nome" required></input>
                     <br>
-                    <input class="form-control " type="email" ng-model="user[0].email" value="{{user[0].email}}" name="user[0].email" required></input>
+                    <input class="form-control " type="email" autocomplete='email' ng-model="user[0].email" value="{{user[0].email}}" name="user[0].email" required></input>
                     <br>
-                    <input class="form-control " type="password" placeholder="Nova Senha" ng-model="user[0].senha" value="{{user[0].email}}" placeholder="Senha" required></input>
+                    <input class="form-control " type="password" autocomplete="current-password" placeholder="Nova Senha" ng-model="user[0].senha" value="{{user[0].email}}" placeholder="Senha" required></input>
                 </div>
 
               </div>

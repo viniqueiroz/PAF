@@ -16,6 +16,7 @@ angular.module('controllers', [])
 
   // Controller responsavel pela página de Logout
   .controller('mainCtrl', ['jwtHelper', '$rootScope', '$scope', 'API', function(jwtHelper, $rootScope, $scope, API) {
+
     $scope.deslogar = function() {
 
       API.logout();
@@ -369,6 +370,8 @@ angular.module('controllers', [])
 
         } else {
           console.log(res.message)
+          alert(res.message);
+          $window.location.reload();
         }
       });
 
@@ -1008,7 +1011,7 @@ $scope.tempoOp = function() {
 
   $scope.pesoEst = function(){
 
-      $scope.registroOperacional.pesoEstimado =$scope.registroOperacional.pesoEntrada+$scope.registroOperacional.pesoSaida;
+      $scope.registroOperacional.pesoEstimado = parseFloat($scope.registroOperacional.pesoEntrada)+parseFloat($scope.registroOperacional.pesoSaida);
   };
 
 
@@ -1114,6 +1117,7 @@ $scope.pesoFinal = 1000 ;
           // console.log(data);
           //Salva no navegador token para o usuário
           window.localStorage.setItem('ngStorage-token', "\"" + data.token + "\"");
+          window.localStorage.setItem('ngStorage-user_role', data.role);
           //Salva no navegador a id do usuário
           // window.localStorage.setItem('id', data.idUsuario.toString());
           // window.localStorage.setItem('name', data.nome.toString());

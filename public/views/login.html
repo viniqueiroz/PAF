@@ -5,7 +5,7 @@
                 <p id="profile-name" class="profile-name-card"><img id="profile-img"class="profile-img-card" src="img/login.png" /></p>
                 <form name="form1" ng-controller="loginCtrl" ng-submit="logar()">
                     <span id="reauth-email" class="reauth-email"></span>
-                    <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" name="email" ng-model="user.email" required autofocus>
+                    <input type="email" id="inputEmail" autocomplete='email' class="form-control" placeholder="E-mail" name="email" ng-model="user.email" required autofocus>
                     <input type="password" id="inputPassword" class="form-control" placeholder="Senha" name="senha" ng-model="user.senha" required>
                     <div id="remember" class="checkbox">
                         <label>

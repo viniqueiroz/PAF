@@ -19,7 +19,8 @@ module.exports = function(app) {
   var Transportadora = require('./models/transportadora');
   var UnidadeMedida = require('./models/unidadeMedida');
   var VerifyToken = require('./verifyToken');
-var moment = require('moment');
+  var VerifyRole = require('./verifyRole');
+  var moment = require('moment');
   //Criptografia da senha
   var sha1 = require('sha1');
 
@@ -237,18 +238,18 @@ app.post('/cadastrarUnidade', function(req, res) { /// Cadastra uma nova unidade
     res.json({
       status: true,
       message: 'Nova Unidade de Medida cadastrada'
-    }).catch(function (err) {
-      console.log(err);
-      res.json({
-        status: false,
-        message: 'Erro ao Cadastrar Nova Unidade de Medida '
-      });
+    });
+  }).catch(function (err) {
+    console.log(err);
+    res.json({
+      status: false,
+      message: 'Erro ao Cadastrar Nova Unidade de Medida '
     });
   });
 });
 
 app.put('/editarUnidade/:unidade_id', function(req, res) { /// Edita a uniadade de medida a partir de seus dados
-    UnidadeMedida.where({idUnit: req.params.unidade_id}).save({sigla: req.body.sigla,descricao: req.body.descricao}  ,{ method: 'update'}).then(function () {
+    UnidadeMedida.where({id: req.params.unidade_id}).save({sigla: req.body.sigla,descricao: req.body.descricao}  ,{ method: 'update'}).then(function () {
       res.json({
         status: true,
         message: 'Unidade de Medida Atualizada'
@@ -264,7 +265,7 @@ app.put('/editarUnidade/:unidade_id', function(req, res) { /// Edita a uniadade 
 });
 
 app.get('/getUnidade/:unidade_id', function(req, res) { /// Retorna do banco a unidade de medida que vai ser editada na subtela
-  UnidadeMedida.where({ idUnit: req.params.unidade_id }).fetch().then(function(unidade) {
+  UnidadeMedida.where({ id: req.params.unidade_id }).fetch().then(function(unidade) {
     //console.log(JSON.stringify(unidade) );
     res.json(unidade);
   }).catch(function (err) {
@@ -274,7 +275,7 @@ app.get('/getUnidade/:unidade_id', function(req, res) { /// Retorna do banco a u
 });
 
 app.delete('/removerUnidade/:unidade_id', function(req, res) { /// Deleta uma determinada unidade de medida
-  UnidadeMedida.where({ idUnit: req.params.unidade_id }).fetch().then((unidades)=> {
+  UnidadeMedida.where({ id: req.params.unidade_id }).fetch().then((unidades)=> {
     unidades.destroy().then(function () {
       res.json({
         status: true,
@@ -546,12 +547,12 @@ app.post('/produto', function(req, res) {   /// Cadastra um novo grupo
     res.json({
       status: true,
       message: 'Novo Produto cadastrado'
-    }).catch(function (err) {
-      console.log(err);
-      res.json({
-        status: false,
-        message: 'Erro ao Cadastrar Novo Produto '
-      });
+    });
+  }).catch(function (err) {
+    console.log(err);
+    res.json({
+      status: false,
+      message: 'Erro ao Cadastrar Novo Produto '
     });
   });
 });

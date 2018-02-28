@@ -16,7 +16,7 @@
                     <input type="time" class="form-control" id="exampleCtrl" ng-model="registroOperacional.horaEntrada"   placeholder="0000"> </div>
                   <div class="col-sm-6 pb-3"> <label for="exampleZip3">Quantidade</label>
                     <div class="input-group ">
-                      <input type="text" class="form-control" id="exampleZip3" placeholder="Quantidade" ng-change="pesoEst()" ng-model="registroOperacional.pesoEntrada" required="">
+                      <input type="text" class="form-control" id="exampleZip3" placeholder="Quantidade" ng-change="pesoEst()" ng-model="registroOperacional.pesoEntrada" mask='9?9?9.999' required="">
                       <div class="input-group-addon">Kg</div>
                     </div>
                   </div>
@@ -30,30 +30,30 @@
                     <input type="time" class="form-control" id="exampleCtrl2" ng-model="registroOperacional.horaSaida" ng-change="tempoOp()" placeholder="0000"> </div>
                   <div class="col-sm-6 pb-3"> <label for="exampleZip">Quantidade</label>
                     <div class="input-group ">
-                      <input type="text" class="form-control" id="exampleZip" placeholder="Quantidade" ng-change="pesoEst()" ng-model="registroOperacional.pesoSaida" required="">
+                      <input type="text" class="form-control" id="exampleZip" placeholder="Quantidade" ng-change="pesoEst()" mask='9?9?9.999' ng-model="registroOperacional.pesoSaida" required="">
                       <div class="input-group-addon">Kg</div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-sm-2 pb-3"> <label for="exampleAmount">Peso Estimado</label>
-                <input disabled="" type="text" class="form-control" id="exampleAmount" ng-model="registroOperacional.pesoEstimado"> </div>
+                <input disabled="" type="text" class="form-control" id="exampleAmount" mask='999.999' ng-model="registroOperacional.pesoEstimado"> </div>
               <div class="col-sm-2 pb-3 col-md-1" style="
     padding-left: 0px;
     padding-right: 0px;
     margin-left: 15px;
     margin-right: 15px;
 "> <label for="exampleAmount2">Peso Final</label>
-                <input disabled="" type="text" class="form-control" id="exampleAmount2" ng-model="pesoFinal"> </div>
+                <input disabled="" type="text" class="form-control" id="exampleAmount2" mask='9?9?9.999' ng-model="pesoFinal"> </div>
               <div class="col-sm-2 pb-3 col-md-1offset-md-1"> <label for="exampleAmount3">Tempo Operação</label>
                 <input disabled="" type="text" class="form-control" id="exampleAmount3" ng-model="registroOperacional.tempoOperacao"> </div>
             </div>
             <div class="row mt-4">
               <div class="col-sm-2 pb-3"> <label for="exampleAmount4">Código </label>
-                <input disabled="" type="text" class="form-control" id="exampleAmount4" ng-model="planejamentoARegistrar.id" placeholder="{{planejamentoARegistrar.id}}"> </div>
+                <input disabled="" type="text" class="form-control" id="exampleAmount4"  ng-model="planejamentoARegistrar.id" placeholder="{{planejamentoARegistrar.id}}"> </div>
               <div class="col-sm-3 pb-3 "> <label for="exampleZip2">Quantidade</label>
                 <div class="input-group ">
-                  <input type="text" class="form-control" id="exampleZip2" placeholder="Quantidade" ng-model="planejamentoARegistrar.quantidade" ></input>
+                  <input type="text" class="form-control" id="exampleZip2" placeholder="Quantidade" mask='9?9?9.999' ng-model="planejamentoARegistrar.quantidade" ></input>
                   <div class="input-group-addon">Kg</div>
                 </div>
               </div>

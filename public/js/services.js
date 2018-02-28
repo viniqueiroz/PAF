@@ -3,6 +3,7 @@ angular.module('services', [])
   .factory('API', ['$http', function($http, $httpProvider) {
     var baseUrl = "http://localhost:3000"; //"http://192.168.1.104:3300"
     $http.defaults.headers.common['x-access-token'] = JSON.parse(localStorage.getItem('ngStorage-token'));
+    $http.defaults.headers.common['user-role'] = JSON.parse(localStorage.getItem('ngStorage-user_role'));
     var dataPushed=[];
     return {
 
@@ -61,13 +62,13 @@ angular.module('services', [])
       },
       /// Transfere os dados para a edição de uma unidade
       editarUnidade: function(data) {
-      return  $http.put(baseUrl + '/editarUnidade/'+data.idUnit, data).then(function (response) {
+      return  $http.put(baseUrl + '/editarUnidade/'+data.id, data).then(function (response) {
          return response.data;
             });
       },
       /// Transfere dados para a seleção da unidade que vai ser removida
       removerUnidade: function(data) {
-      return  $http.delete(baseUrl + '/removerUnidade/'+data.idUnit).then(function (response) {
+      return  $http.delete(baseUrl + '/removerUnidade/'+data.id).then(function (response) {
          return response.data;
             });
       },

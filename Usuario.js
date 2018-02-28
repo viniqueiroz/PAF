@@ -55,7 +55,8 @@ RoutUsuario.post('/auth', function(req, res) {
             message: 'Token Gerada',
             token: token,
             id: user.idUsuario,
-            name: user.nome
+            name: user.nome,
+            role: user.idPrivilegio
           });
         }
       }
