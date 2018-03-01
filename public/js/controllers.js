@@ -12,6 +12,7 @@ angular.module('controllers', [])
   // Controller responsavel pela página Home
   .controller('modalCtrl', ['$rootScope', '$scope', 'API', function($rootScope, $scope, API) {
     $scope.editData = API.getData();
+
   }])
 
   // Controller responsavel pela página de Logout
@@ -38,54 +39,7 @@ angular.module('controllers', [])
 
        API.pushData(data);
     }
-    //
-    //
-    // API.getAllClientsPej().then(function(clients) {
-    //
-    //   $scope.clientePej = clients; // alterado > personalDetails = clientePej
-    //
-    // });
-    //
-    // var obras = null;
-    // API.getObras().then(function(res) {
-    //   console.log(res);
-    //   obras = res;
-    //
-    // });
-    // var trechos = null;
-    // API.getTrechos().then(function(res) {
-    //   console.log(res);
-    //   trechos = res;
-    //
-    // });
-    //
-    // $scope.cliente_selected = 1
-    // $scope.ordenar = function(keyname) {
-    //   $scope.sortKey = keyname;
-    //   $scope.reverse = !$scope.reverse;
-    // };
-    //
-    // $scope.setObra = function(cliente) {
-    //   var listaObras = [];
-    //   for(i = 0; i < obras.length; i++) {
-    //     if(obras[i].cliente_id == cliente.id && obras[i].tipo_cliente == cliente.infoCliente.papel) {
-    //       listaObras.push(obras[i]);
-    //     }
-    //   }
-    //   $scope.obras = listaObras;
-    // };
-    //
-    // $scope.setTrecho = function(obra) {
-    //   var listaTrechos = [];
-    //   for(i = 0; i < trechos.length; i++) {
-    //     if(trechos[i].obra_id == obra.id) {
-    //       listaTrechos.push(trechos[i]);
-    //     }
-    //   }
-    //   $scope.trechos = listaTrechos;
-    // };
 
-    // usuários
 
     API.getAllUsers().then(function(data) { /// Passa para a pagina todos os usuarios
 
@@ -170,8 +124,43 @@ angular.module('controllers', [])
         $rootScope.user = res;
       });
     }
+    $scope.ordenar = function(keyname) {
+      $scope.sortKey = keyname;
+      $scope.reverse = !$scope.reverse;
+    };
+    $scope.addNew = function(personalDetails) {
+      $scope.personalDetails.push({
+        'nome': personalDetails.nome,
+        // 'lname': personalDetails.lname,
+        'email': personalDetails.email,
+        // 'tipo': personalDetails.tipoUsuario.descricao,
+      });
+      $scope.PD = {};
+    };
 
-    $scope.edit = function() {
+    $scope.remove = function() { /// remove o usuario
+      var newDataList = [];
+      $scope.selectedAll = false;
+      angular.forEach($scope.personalDetails, function(selected) {
+        if(!selected.selected) {
+          newDataList.push(selected);
+        }
+      });
+      $scope.personalDetails = newDataList;
+    };
+
+    $scope.checkAll = function() { /// Percorre todos os usuarios cadastrados
+      if(!$scope.selectedAll) {
+        $scope.selectedAll = true;
+      } else {
+        $scope.selectedAll = false;
+      }
+      angular.forEach($scope.personalDetails, function(personalDetails) {
+        personalDetails.selected = $scope.selectedAll;
+      });
+    };
+
+    $scope.edit = function() { /// Edita o usuario
       var newDataList = [];
       $scope.selectedAll = false;
       angular.forEach($scope.personalDetails, function(selected) {
@@ -181,61 +170,11 @@ angular.module('controllers', [])
       });
       if(newDataList.length <= 1) {
         alert("Por favor selecione apenas 1 usuário por vez para edição!");
+      } else {
+
       }
-      $scope.ordenar = function(keyname) {
-        $scope.sortKey = keyname;
-        $scope.reverse = !$scope.reverse;
-      };
-      $scope.addNew = function(personalDetails) {
-        $scope.personalDetails.push({
-          'nome': personalDetails.nome,
-          // 'lname': personalDetails.lname,
-          'email': personalDetails.email,
-          // 'tipo': personalDetails.tipoUsuario.descricao,
-        });
-        $scope.PD = {};
-      };
 
-      $scope.remove = function() { /// remove o usuario
-        var newDataList = [];
-        $scope.selectedAll = false;
-        angular.forEach($scope.personalDetails, function(selected) {
-          if(!selected.selected) {
-            newDataList.push(selected);
-          }
-        });
-        $scope.personalDetails = newDataList;
-      };
-
-      $scope.checkAll = function() { /// Percorre todos os usuarios cadastrados
-        if(!$scope.selectedAll) {
-          $scope.selectedAll = true;
-        } else {
-          $scope.selectedAll = false;
-        }
-        angular.forEach($scope.personalDetails, function(personalDetails) {
-          personalDetails.selected = $scope.selectedAll;
-        });
-      };
-
-      $scope.edit = function() { /// Edita o usuario
-        var newDataList = [];
-        $scope.selectedAll = false;
-        angular.forEach($scope.personalDetails, function(selected) {
-          if(!selected.selected) {
-            newDataList.push(selected);
-          }
-        });
-        if(newDataList.length <= 1) {
-          alert("Por favor selecione apenas 1 usuário por vez para edição!");
-        } else {
-
-        }
-
-      };
-
-
-    }
+    };
 
   }])
 
@@ -909,7 +848,7 @@ $scope.planejamentos = data ;
       keydec = jwtHelper.decodeToken(key);
       var planejamento = $scope.planejamento //Recebe os dados da view
       console.log(planejamento);
-      planejamento.idStatus=1;
+      planejamento.idStatus=2;
       planejamento.idUnidadeMedida=1;
       planejamento.idUsuario= keydec.id ;
 
@@ -944,7 +883,7 @@ var keyCtrl = 'operacional';
 
 
 
-API.getPlanejamentosByStatus(2).then(function(data){
+API.getPlanejamentosByStatus(3).then(function(data){
 $scope.planejamentosPendentes = data ;
 
 });
@@ -992,6 +931,22 @@ var planId = API.getData(keyCtrl);
 API.getPlanejamento(planId).then(function(response){
 $scope.planejamentoARegistrar=response;
 
+if(response.idRegistroOperacional){
+  API.getRegistroOperacional(response.idRegistroOperacional).then(function(response){
+    console.log(response);
+    $scope.registroOperacional = response;
+
+    $scope.registroOperacional.dataEntrada = new Date(moment($scope.registroOperacional.dataEntrada).format('YYYY,MM,DD'));
+
+
+
+    $scope.registroOperacional.dataSaida =new Date(moment($scope.registroOperacional.dataSaida).format('YYYY,MM,DD'));
+
+
+  });
+
+
+};
 });
 
 API.getTransportadoras().then(function(response){
@@ -1046,6 +1001,20 @@ $scope.pesoFinal = 1000 ;
         console.log(err)
       })
     }
+
+
+
+  }])
+
+
+  // Controller responsavel pela página de Planejamento
+  .controller('passagemTurnoCtrl', ['jwtHelper','$rootScope', '$scope', 'API', '$window','moment', function(jwtHelper,$rootScope, $scope, API, $window,moment) {
+
+    API.getPlanejamentosByStatus(3).then(function(data){
+    $scope.planejamentosFinalizados = data ;
+
+    });
+
 
 
 

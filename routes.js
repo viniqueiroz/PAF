@@ -19,7 +19,7 @@ module.exports = function(app) {
   var Transportadora = require('./models/transportadora');
   var UnidadeMedida = require('./models/unidadeMedida');
   var VerifyToken = require('./verifyToken');
-  var VerifyRole = require('./verifyRole');
+  //var VerifyRole = require('./verifyRole');
   var moment = require('moment');
   //Criptografia da senha
   var sha1 = require('sha1');
@@ -106,7 +106,7 @@ app.put('/editarUsuario/:usuario_id', function(req, res) {
 // Essa função pega um usuário no banco que vai ser editado na subtela
 app.get('/getUsuario/:usuario_id', function(req, res) {
   usuario = new dbfun.Usuario();
-  usuario.query("SELECT `usuario`.`idUsuario`,`usuario`.`nome`,    `usuario`.`email`,    `usuario`.`idStatus`,    `usuario`.`idPrivilegio`FROM `ibpc`.`usuario` WHERE `usuario`.`idUsuario`="+
+  usuario.query("SELECT `usuario`.`idUsuario`,`usuario`.`nome`,    `usuario`.`email`,    `usuario`.`idStatus`,    `usuario`.`idPrivilegio`FROM `paf`.`usuario` WHERE `usuario`.`idUsuario`="+
   req.params.usuario_id+";", function(err, rows, fields) {
     if(err) throw err;
     res.json(rows);
@@ -116,7 +116,7 @@ app.get('/getUsuario/:usuario_id', function(req, res) {
 // Essa função pega um usuário no banco que vai ser editado na subtela
 app.get('/getUser/:usuario_id', function(req, res) {
   usuario = new dbfun.Usuario();
-  usuario.query("SELECT `usuario`.`idUsuario`,`usuario`.`nome`,    `usuario`.`email`,    `usuario`.`idStatus`,    `usuario`.`idPrivilegio`FROM `ibpc`.`usuario` WHERE `usuario`.`idUsuario`="+
+  usuario.query("SELECT `usuario`.`idUsuario`,`usuario`.`nome`,    `usuario`.`email`,    `usuario`.`idStatus`,    `usuario`.`idPrivilegio`FROM `paf`.`usuario` WHERE `usuario`.`idUsuario`="+
   req.params.usuario_id+";", function(err, rows, fields) {
     if(err) throw err;
     res.json(rows);
@@ -682,19 +682,19 @@ app.get('/planejamento', function(req, res) { /// Retorna do banco todos os clie
 app.post('/planejamento', function(req, res) {   /// Cadastra um novo grupo
 
 req.body.dataPlanejamento= moment(req.body.dataPlanejamento).format('YYYY-MM-DD');
-req.body.horaPlanejamento= moment(req.body.horaPlanejamento).format('HH:mm  ');
+req.body.horaPlanejamento= moment(req.body.horaPlanejamento).format('HH:mm');
   new Planejamento(req.body).save().then(function(model) {
     console.log('Novo Planejameto cadastrado');
     res.json({
       status: true,
       message: 'Novo Planejameto cadastrado'
+    });
     }).catch(function (err) {
       console.log(err);
       res.json({
         status: false,
         message: 'Erro ao Cadastrar Novo Planejameto '
       });
-    });
   });
 });
 
@@ -707,7 +707,7 @@ req.body.horaPlanejamento= moment(req.body.horaPlanejamento).format('HH:mm  ');
 
 app.get('/planejamento/status/:status_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
 Planejamento.query(function(qb) {
-  qb.where('idStatus', '<=', 3);
+  qb.where('idStatus', '<=', req.params.status_id);
 }).fetchAll({withRelated: ['status','categoria','fornecedor','produto','area','movimentacao','transportadora'], require: true}).then(function(planejamentos) {
   //console.log(JSON.stringify(planejamentos) );
   res.json(planejamentos);
@@ -773,6 +773,10 @@ app.get('/operacional', function(req, res) { /// Retorna do banco todos os clien
 });
 
 app.post('/operacional', function(req, res) {   /// Cadastra um novo grupo
+  req.body.dataEntrada= moment(req.body.dataEntrada).format('YYYY-MM-DD');
+  req.body.horaEntrada= moment(req.body.horaEntrada).format('HH:mm');
+  req.body.dataSaida= moment(req.body.dataSaida).format('YYYY-MM-DD');
+  req.body.horaSaida= moment(req.body.horaSaida).format('HH:mm');
 
   new RegistroOperacional(req.body).save().then(function(model) {
     console.log('Novo Registro Operacional cadastrado');
@@ -785,7 +789,7 @@ app.post('/operacional', function(req, res) {   /// Cadastra um novo grupo
 });
 
  app.get('/operacional/:operacional_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
-  RegistroOperacional.where({ id: req.params.produto_id }).fetch().then(function(produto) {
+  RegistroOperacional.where({ id: req.params.operacional_id }).fetch().then(function(operacional) {
     console.log(JSON.stringify(operacional) );
     res.json(operacional);
   }).catch(function (err) {

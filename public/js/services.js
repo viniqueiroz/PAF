@@ -376,7 +376,6 @@ getPlanejamentos: function(data, success, error) {
 
  getPlanejamento: function(data) {
   return  $http.get(baseUrl + '/planejamento/'+data).then(function (response) {
-console.log(response.data);
     return response.data;
        });
  },
@@ -398,6 +397,11 @@ cadastroOperacional: function(data, success, error) {
 },
 getRegistrosOperacionais: function(data, success, error) {
    return  $http.get(baseUrl + '/operacional', data).then(function (response) {
+   return response.data;
+      });
+},
+getRegistroOperacional: function(data, success, error) {
+   return  $http.get(baseUrl + '/operacional/'+data).then(function (response) {
    return response.data;
       });
 },

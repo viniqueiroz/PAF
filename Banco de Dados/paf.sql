@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-Fev-2018 às 18:55
--- Versão do servidor: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: 01-Mar-2018 às 16:57
+-- Versão do servidor: 10.1.30-MariaDB
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `paf`
 --
+CREATE DATABASE IF NOT EXISTS `paf` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `paf`;
 
 -- --------------------------------------------------------
 
@@ -33,6 +35,14 @@ CREATE TABLE `area` (
   `area` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `area`
+--
+
+INSERT INTO `area` (`id`, `area`) VALUES
+(1, 'CP'),
+(2, 'EM');
+
 -- --------------------------------------------------------
 
 --
@@ -42,17 +52,6 @@ CREATE TABLE `area` (
 CREATE TABLE `categoria` (
   `id` int(255) NOT NULL,
   `categoria` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `categoriapeca`
---
-
-CREATE TABLE `categoriapeca` (
-  `idCatPeca` int(11) NOT NULL,
-  `categoria` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,6 +76,14 @@ CREATE TABLE `movimentacao` (
   `movimentacao` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `movimentacao`
+--
+
+INSERT INTO `movimentacao` (`id`, `movimentacao`) VALUES
+(1, 'EXPEDIÇÃO'),
+(2, 'RECEBIMENTO');
+
 -- --------------------------------------------------------
 
 --
@@ -93,8 +100,8 @@ CREATE TABLE `planejamento` (
   `idRegistroOperacional` int(255) NOT NULL,
   `os_po_remessa` int(255) NOT NULL,
   `dataPlanejamento` varchar(255) NOT NULL,
-  `horaPlanejamento` time NOT NULL,
-  `quantidade` int(255) NOT NULL,
+  `horaPlanejamento` varchar(255) NOT NULL,
+  `quantidade` float NOT NULL,
   `idUnidadeMedida` int(255) NOT NULL,
   `idArea` int(255) NOT NULL,
   `ordem` int(255) NOT NULL,
@@ -145,17 +152,17 @@ CREATE TABLE `registro_operacional` (
   `idPlanejamento` int(11) NOT NULL,
   `notaFiscal` int(255) NOT NULL,
   `placa` varchar(255) NOT NULL,
-  `dataEntrada` varchar(255) NOT NULL,
-  `horaEntrada` time NOT NULL,
-  `pesoEntrada` int(11) NOT NULL,
-  `dataSaida` varchar(255) NOT NULL,
-  `horaSaida` time NOT NULL,
-  `pesoSaida` int(11) NOT NULL,
-  `pesoEstimado` int(11) NOT NULL,
-  `pesoFinal` int(11) NOT NULL,
-  `tempoOperacao` time NOT NULL,
-  `idUserOpInicio` int(11) NOT NULL,
-  `idUserOpFinal` int(11) NOT NULL
+  `dataEntrada` varchar(255) DEFAULT NULL,
+  `horaEntrada` varchar(255) DEFAULT NULL,
+  `pesoEntrada` float DEFAULT '0',
+  `dataSaida` varchar(255) DEFAULT NULL,
+  `horaSaida` varchar(255) DEFAULT NULL,
+  `pesoSaida` float DEFAULT '0',
+  `pesoEstimado` float DEFAULT NULL,
+  `pesoFinal` float DEFAULT NULL,
+  `tempoOperacao` varchar(255) DEFAULT NULL,
+  `idUserOpInicio` int(11) DEFAULT NULL,
+  `idUserOpFinal` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -174,9 +181,10 @@ CREATE TABLE `statususuario` (
 --
 
 INSERT INTO `statususuario` (`id`, `nomeStatus`) VALUES
-(1, 'Ativo'),
 (2, 'PENDENTE'),
-(3, 'EM OPERAÇÃO');
+(3, 'EM OPERAÇÃO'),
+(4, 'CONCLUSO'),
+(5, 'FINALIZADO');
 
 -- --------------------------------------------------------
 
@@ -225,7 +233,7 @@ CREATE TABLE `usuario` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `idStatus` int(11) NOT NULL DEFAULT '0',
+  `idStatus` int(11) NOT NULL,
   `idPrivilegio` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -253,13 +261,6 @@ ALTER TABLE `area`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `categoriapeca`
---
-ALTER TABLE `categoriapeca`
-  ADD PRIMARY KEY (`idCatPeca`),
-  ADD UNIQUE KEY `categoria` (`categoria`);
 
 --
 -- Indexes for table `fornecedor`
@@ -322,7 +323,6 @@ ALTER TABLE `unidademed`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`),
   ADD UNIQUE KEY `uc_usuario` (`email`),
-  ADD KEY `idStatus` (`idStatus`),
   ADD KEY `idPrivilegio` (`idPrivilegio`);
 
 --
@@ -334,66 +334,73 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `area`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `categoriapeca`
---
-ALTER TABLE `categoriapeca`
-  MODIFY `idCatPeca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `fornecedor`
 --
 ALTER TABLE `fornecedor`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `movimentacao`
 --
 ALTER TABLE `movimentacao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `planejamento`
 --
 ALTER TABLE `planejamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `privilegio`
 --
 ALTER TABLE `privilegio`
   MODIFY `idPrivilegio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `registro_operacional`
 --
 ALTER TABLE `registro_operacional`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `statususuario`
 --
 ALTER TABLE `statususuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `transportadora`
 --
 ALTER TABLE `transportadora`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `unidademed`
 --
 ALTER TABLE `unidademed`
   MODIFY `idUnit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- Constraints for dumped tables
 --
@@ -402,8 +409,7 @@ ALTER TABLE `usuario`
 -- Limitadores para a tabela `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `idPrivilegio` FOREIGN KEY (`idPrivilegio`) REFERENCES `privilegio` (`idPrivilegio`),
-  ADD CONSTRAINT `idStatus` FOREIGN KEY (`idStatus`) REFERENCES `statususuario` (`id`);
+  ADD CONSTRAINT `idPrivilegio` FOREIGN KEY (`idPrivilegio`) REFERENCES `privilegio` (`idPrivilegio`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
