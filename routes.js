@@ -19,7 +19,7 @@ module.exports = function(app) {
   var Transportadora = require('./models/transportadora');
   var UnidadeMedida = require('./models/unidadeMedida');
   var VerifyToken = require('./verifyToken');
-  //var VerifyRole = require('./verifyRole');
+
   var moment = require('moment');
   //Criptografia da senha
   var sha1 = require('sha1');
@@ -124,7 +124,7 @@ app.get('/getUser/:usuario_id', function(req, res) {
 });
 
 //Essa funçao retorna os usuários cadastrados no banco de dados com os devidos campos listados
-app.get('/users', VerifyToken , function(req, res) {
+app.get('/users',VerifyToken(1), function(req, res) {
   users = new dbfun.Usuario();
   users.query("SELECT u.idUsuario, u.nome, u.email, u.senha, u.idStatus, u.idPrivilegio, p.nomePrivilegio FROM usuario as u, privilegio as p where u.idPrivilegio=p.idPrivilegio", function(err, rows, fields) {
     if(err) throw err;
@@ -166,7 +166,7 @@ app.get('/getStat/:status_id', function(req, res) { /// Retorna do banco o statu
   });
 });
 
-app.post('/cadastrarStatus', function(req, res) {  /// Cadastra um novo status
+app.post('/cadastrarStatus',VerifyToken(1), function(req, res) {  /// Cadastra um novo status
   var newStatus = { /// Recebe os dados da view para serem cadastrados
     nomeStatus: req.body.nomeStatus
   }
@@ -232,7 +232,7 @@ app.get('/getUnidadeMedida', function(req, res) { // Retorna do banco todos as u
 
 });
 
-app.post('/cadastrarUnidade', function(req, res) { /// Cadastra uma nova unidade de medida
+app.post('/cadastrarUnidade',VerifyToken(1), function(req, res) { /// Cadastra uma nova unidade de medida
   new UnidadeMedida(req.body).save().then(function(model) {
     console.log('Nova Unidade de Medida cadastrada');
     res.json({
@@ -705,7 +705,7 @@ req.body.horaPlanejamento= moment(req.body.horaPlanejamento).format('HH:mm');
   });
 });
 
-app.get('/planejamento/status/:status_id', function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
+app.get('/planejamento/status/:status_id',function(req, res) {  /// Retorna do banco o grupo que vai ser editado na subtela de edição
 Planejamento.query(function(qb) {
   qb.where('idStatus', '<=', req.params.status_id);
 }).fetchAll({withRelated: ['status','categoria','fornecedor','produto','area','movimentacao','transportadora'], require: true}).then(function(planejamentos) {

@@ -11,7 +11,7 @@ angular.module('routes', [])
       })
       .when("/usuario", { //Endereço a ser digitado
         templateUrl: "/views/usuario.html", // view a ser utilizada
-        controller: "mainCtrl", // Controlador a ser utilizado
+        controller: "userCtrl", // Controlador a ser utilizado
 
       })
       .when("/cadastroUsuario", { //Endereço a ser digitado
@@ -97,6 +97,11 @@ angular.module('routes', [])
       .when("/passagemTurno", { //Endereço a ser digitado
         templateUrl: "/views/passagemTurno.html", // view a ser utilizada
         controller: "passagemTurnoCtrl" // Controlador a ser utilizado
+      })
+
+      .when("/relatorio", { //Endereço a ser digitado
+        templateUrl: "/views/relatorio.html", // view a ser utilizada
+        controller: "relatorioCtrl" // Controlador a ser utilizado
       })
 
       .when('/contato/:id', {

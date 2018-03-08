@@ -9,13 +9,13 @@
 </style>
 
   <h4>Registro Operacional</h4>
-  <div class="row" ng-hide="!personalDetails.length">
+  <div class="row" ng-hide="!planejamentosPendentes.length">
     <div class="col-md-10" style="padding-left: 0px;">
       <div class="well">
         <label><input type="text"class="form-control" ng-model="criteria" placeholder="Buscar...">
         </label>
       </div>
-      <table class="table  table-bordered table-responsive" align="left"  ng-table ="usersTable">
+      <table class="table  table-bordered table-responsive" align="left"  ng-table ="operacionalTable">
         <thead>
           <tr>
             <th width=3%><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
@@ -55,7 +55,7 @@
             <td align="left" width=4%>
 
               <p  title="Edit">
-                <button class="btn btn-primary btn-sm" ng-click="getUsuario(usuario)" data-title="Edit" data-toggle="modal" data-target="#edit" >
+                <button class="btn btn-primary btn-sm" ng-click="" data-title="Edit" data-toggle="modal" data-target="#edit" >
                   <span class="glyphicon glyphicon-pencil"></span>
                 </button></p>
 
@@ -76,38 +76,4 @@
     </div>
   </div>
   <br />
-</div>
-
-
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Editar Usuário </h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <input class="form-control " type="text" ng-model="usuario[0].nome" value="{{usuario[0].nome}}" name="usuario[0].nome" required></input>
-          <br>
-          <input class="form-control " type="email" ng-model="usuario[0].email" value="{{usuario[0].email}}" name="usuario[0].email" required></input>
-          <br>
-          <input class="form-control " type="password" placeholder="Nova Senha" ng-model="usuario[0].senha" value="{{usuario[0].senha}}" name="usuario[0].senha" required></input>
-          <br>
-          <div class="form-group">
-            <b>Tipo de usuário:</b>
-            <label class="radio-inline"><input type="radio" value=1 name="usuario[0].idPrivilegio"  ng-model="usuario[0].idPrivilegio" required>Administrador</label>
-            <label class="radio-inline"><input type="radio" value=2 name="usuario[0].idPrivilegio" ng-model="usuario[0].idPrivilegio" required>Funcionário</label>
-          </div>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" ng-click="editarUsuario(usuario[0])" data-dismiss="modal">Salvar</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
 </div>

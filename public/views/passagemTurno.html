@@ -1,16 +1,11 @@
 <div class="container">
-   <h4>Registros Concluidos</h4>
-    <div class="row" ng-hide="!personalDetails.length">
+   <h4 class="page-header">Registros Concluidos</h4>
+    <div class="row" ng-hide="!registrosConcluidos.length">
         <div class="col-md-10">
-          <div class="well">
-          <label><input type="text"class="form-control" ng-model="criteria" placeholder="Buscar...">
-          </label>
-           </div>
-            <table class="table table-striped table-bordered table-responsive" ng-table ="usersTable">
+           <table class="table table-condensed table-striped table-bordered table-responsive" ng-table ="regCTable">
                 <thead>
                     <tr>
-                        <th width=3%><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
-                        <th ng-click="ordenar('planejamento.id')">Código</th>
+                      <th ng-click="ordenar('registroConcluido.id')">Código</th>
                          <th >Ordem</th>
                            <th>Data</th>
                              <th>Hora</th>
@@ -24,20 +19,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr dir-paginate="planejamento in planejamentos | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:5">
-                        <td>
-                            <input type="checkbox" ng-model="usuario.selected"/>
-                        </td>
-                        <td>{{planejamento.id}}</td>
-                        <td>{{planejamento.ordem}}</td>
-                        <td>{{planejamento.dataPlanejamento}}</td>
-                        <td>{{planejamento.horaPlanejamento}}</td>
-                        <td>{{planejamento.movimentacao.movimentacao}}</td>
-                        <td>{{planejamento.categoria.categoria}}</td>
-                          <td>{{planejamento.fornecedor.fornecedor}}</td>
-                         <td>{{planejamento.produto.produto}}</td>
-                     <td>{{planejamento.transportadora.transportadora}}</td>
-                        <td>{{planejamento.quantidade}}</td>
+                    <tr dir-paginate="registroConcluido in registrosConcluidos | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:5">
+                        <td>{{registroConcluido.id}}</td>
+                        <td>{{registroConcluido.ordem}}</td>
+                        <td>{{registroConcluido.dataPlanejamento}}</td>
+                        <td>{{registroConcluido.horaPlanejamento}}</td>
+                        <td>{{registroConcluido.movimentacao.movimentacao}}</td>
+                        <td>{{registroConcluido.categoria.categoria}}</td>
+                          <td>{{registroConcluido.fornecedor.fornecedor}}</td>
+                         <td>{{registroConcluido.produto.produto}}</td>
+                     <td>{{registroConcluido.transportadora.transportadora}}</td>
+                        <td>{{registroConcluido.quantidade}}</td>
                       </tr>
                 </tbody>
             </table>
@@ -52,17 +44,12 @@
 
 <div class="container">
    <h4>Registros não Concluidos</h4>
-    <div class="row" ng-hide="!personalDetails.length">
+    <div class="row" ng-hide="!registrosNaoConcluidos.length">
         <div class="col-md-10">
-          <div class="well">
-          <label><input type="text"class="form-control" ng-model="criteria" placeholder="Buscar...">
-          </label>
-           </div>
-            <table class="table table-striped table-bordered table-responsive" ng-table ="usersTable">
+          <table class="table table-condensed table-striped table-bordered table-responsive" ng-table ="regNCTable">
                 <thead>
                     <tr>
-                        <th width=3%><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
-                        <th ng-click="ordenar('planejamento.id')">Código</th>
+                      <th ng-click="ordenar('registroNaoConcluido.id')">Código</th>
                          <th >Ordem</th>
                            <th>Data</th>
                              <th>Hora</th>
@@ -76,20 +63,58 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr dir-paginate="planejamento in planejamentos | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:5">
-                        <td>
-                            <input type="checkbox" ng-model="usuario.selected"/>
-                        </td>
-                        <td>{{planejamento.id}}</td>
-                        <td>{{planejamento.ordem}}</td>
-                        <td>{{planejamento.dataPlanejamento}}</td>
-                        <td>{{planejamento.horaPlanejamento}}</td>
-                        <td>{{planejamento.movimentacao.movimentacao}}</td>
-                        <td>{{planejamento.categoria.categoria}}</td>
-                          <td>{{planejamento.fornecedor.fornecedor}}</td>
-                         <td>{{planejamento.produto.produto}}</td>
-                     <td>{{planejamento.transportadora.transportadora}}</td>
-                        <td>{{planejamento.quantidade}}</td>
+                    <tr dir-paginate="registroNaoConcluido in registrosNaoConcluidos | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:5">
+                        <td>{{registroNaoConcluido.id}}</td>
+                        <td>{{registroNaoConcluido.ordem}}</td>
+                        <td>{{registroNaoConcluido.dataPlanejamento}}</td>
+                        <td>{{registroNaoConcluido.horaPlanejamento}}</td>
+                        <td>{{registroNaoConcluido.movimentacao.movimentacao}}</td>
+                        <td>{{registroNaoConcluido.categoria.categoria}}</td>
+                          <td>{{registroNaoConcluido.fornecedor.fornecedor}}</td>
+                         <td>{{registroNaoConcluido.produto.produto}}</td>
+                     <td>{{registroNaoConcluido.transportadora.transportadora}}</td>
+                        <td>{{registroNaoConcluido.quantidade}}</td>
+                      </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="8" boundary-links="true"></dir-pagination-controls>
+        </div>
+    </div>
+<br />
+</div>
+
+<div class="container">
+   <h4>Registros Em Operação</h4>
+    <div class="row" ng-hide="!registrosEmOperacao.length">
+        <div class="col-md-10">
+           <table class="table table-condensed table-striped table-bordered table-responsive" ng-table ="regiEATable">
+                <thead>
+                    <tr>
+                      <th ng-click="ordenar('registroEmOperacao.id')">Código</th>
+                         <th >Ordem</th>
+                           <th>Data</th>
+                             <th>Hora</th>
+                              <th>Movimentação</th>
+                                 <th>Categoria</th>
+                                      <th>Fornecedor</th>
+                                    <th>Produto</th>
+                                     <th>Transportadora</th>
+                                       <th>Quantidade</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="registroEmOperacao in registrosEmOperacao | filter:criteria | orderBy:sortKey:reverse | itemsPerPage:5">
+                        <td>{{registroEmOperacao.id}}</td>
+                        <td>{{registroEmOperacao.ordem}}</td>
+                        <td>{{registroEmOperacao.dataPlanejamento}}</td>
+                        <td>{{registroEmOperacao.horaPlanejamento}}</td>
+                        <td>{{registroEmOperacao.movimentacao.movimentacao}}</td>
+                        <td>{{registroEmOperacao.categoria.categoria}}</td>
+                          <td>{{registroEmOperacao.fornecedor.fornecedor}}</td>
+                         <td>{{registroEmOperacao.produto.produto}}</td>
+                     <td>{{registroEmOperacao.transportadora.transportadora}}</td>
+                        <td>{{registroEmOperacao.quantidade}}</td>
                       </tr>
                 </tbody>
             </table>

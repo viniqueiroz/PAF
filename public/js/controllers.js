@@ -24,28 +24,11 @@ angular.module('controllers', [])
       window.location.reload();
     }
 
-    // key = window.localStorage.getItem('ngStorage-token')
-    // key = key.replace("\"", "").replace("\"", "");
-    // keydec = jwtHelper.decodeToken(key);
-    //basta chamar keydec.id para usar o id do usuário
-
-
-
-
-
-
-
      $scope.pushData = function(data) {
 
        API.pushData(data);
     }
 
-
-    API.getAllUsers().then(function(data) { /// Passa para a pagina todos os usuarios
-
-      $scope.personalDetails = data;
-
-    });
 
     $scope.addNew = function(personalDetails) {
       $scope.personalDetails.push({
@@ -57,60 +40,6 @@ angular.module('controllers', [])
       $scope.PD = {};
     };
 
-    $scope.removerUsuario = function() { /// Remove o Usuario
-      var s = false;
-      angular.forEach($scope.personalDetails, function(selected) {
-        if(selected.selected) {
-          s = true;
-          API.removerUsuario(selected).then(function(res) {
-            if(res.status) {
-              console.log("Usuário removido");
-            } else {
-              console.log("Erro ao remover Usuário");
-            }
-          })
-        }
-      });
-      if(!s) {
-        alert("Nenhum Item Selecionado")
-      } else {
-        alert("Usuários Removidos");
-        window.location.reload();
-      }
-
-    };
-
-    // $scope.remover = function() {
-    //   var newDataList = [];
-    //   $scope.selectedAll = false;
-    //   angular.forEach($scope.personalDetails, function(selected) {
-    //     if(!selected.selected) {
-    //       newDataList.push(selected);
-    //     }
-    //   });
-    //   $scope.personalDetails = newDataList;
-    // };
-
-    // Essa função edita o usuario
-    $scope.editarUsuario = function(data) {
-      // console.log(data)
-      if(data.senha==null){
-        alert("É necessário preencher a senha")
-      }else{
-        API.editarUsuario(data).then(function(res) {
-          alert(res.message);
-          window.location.reload();
-        })
-      }
-    }
-
-    // Essa função pega o usuario no banco que deve ser editado para preencher os campos
-    $scope.getUsuario = function(data) {
-      // console.log(data)
-      API.getUsuario(data).then(function(res) {
-        $scope.usuario = res;
-      });
-    }
 
     // Essa função pega o usuario no banco que deve ser utilizado no menu principal
     $scope.getUser = function() {
@@ -175,6 +104,64 @@ angular.module('controllers', [])
       }
 
     };
+
+  }])
+
+  // Controller responsavel pela página de Logout
+  .controller('userCtrl', ['jwtHelper', '$rootScope', '$scope', 'API', function(jwtHelper, $rootScope, $scope, API) {
+
+    API.getAllUsers().then(function(data) { /// Passa para a pagina todos os usuarios
+
+      $scope.personalDetails = data;
+
+    });
+
+
+
+    $scope.removerUsuario = function() { /// Remove o Usuario
+      var s = false;
+      angular.forEach($scope.personalDetails, function(selected) {
+        if(selected.selected) {
+          s = true;
+          API.removerUsuario(selected).then(function(res) {
+            if(res.status) {
+              console.log("Usuário removido");
+            } else {
+              console.log("Erro ao remover Usuário");
+            }
+          })
+        }
+      });
+      if(!s) {
+        alert("Nenhum Item Selecionado")
+      } else {
+        alert("Usuários Removidos");
+        window.location.reload();
+      }
+
+    };
+
+    // Essa função edita o usuario
+    $scope.editarUsuario = function(data) {
+      // console.log(data)
+      if(data.senha==null){
+        alert("É necessário preencher a senha")
+      }else{
+        API.editarUsuario(data).then(function(res) {
+          alert(res.message);
+          window.location.reload();
+        })
+      }
+    }
+
+    // Essa função pega o usuario no banco que deve ser editado para preencher os campos
+    $scope.getUsuario = function(data) {
+      // console.log(data)
+      API.getUsuario(data).then(function(res) {
+        $scope.usuario = res;
+      });
+    }
+
 
   }])
 
@@ -304,9 +291,6 @@ angular.module('controllers', [])
           console.log(res.message)
           alert(res.message);
           $window.location.reload();
-
-
-
         } else {
           console.log(res.message)
           alert(res.message);
@@ -384,7 +368,7 @@ angular.module('controllers', [])
     $scope.cadastrarStatus = function() { /// Cadastra um novo status
       var status = $scope.status //Recebe os dados da view
       API.cadastroStatus(status).then(function(res) {
-        if(res.status) {
+        if(res.status||res.data.auth) {
           console.log("Status Cadastrado")
           alert(res.message);
           $window.location.reload();
@@ -392,7 +376,7 @@ angular.module('controllers', [])
 
         } else {
           console.log("Erro ao adicionar Status")
-          alert(res.message);
+          alert(res.data.message);
         }
       }, function(err) {
         console.log(err)
@@ -1008,18 +992,76 @@ $scope.pesoFinal = 1000 ;
 
 
   // Controller responsavel pela página de Planejamento
-  .controller('passagemTurnoCtrl', ['jwtHelper','$rootScope', '$scope', 'API', '$window','moment', function(jwtHelper,$rootScope, $scope, API, $window,moment) {
+  .controller('passagemTurnoCtrl', ['jwtHelper','$rootScope', '$scope', 'API', '$window', function(jwtHelper,$rootScope, $scope, API, $window) {
 
-    API.getPlanejamentosByStatus(3).then(function(data){
-    $scope.planejamentosFinalizados = data ;
+
+    API.getPlanejamentosByStatus(2).then(function(data) {
+       $scope.registrosNaoConcluidos = data; //passa para a pagina todos os registros Concluidos
 
     });
+
+    API.getPlanejamentosByStatus(3).then(function(data) {
+      $scope.registrosEmOperacao = data; //passa para a pagina todos os registros Concluidos
+
+    });
+
+    API.getPlanejamentosByStatus(4).then(function(data) {
+      $scope.registrosConcluidos = data; //passa para a pagina todos os registros Concluidos
+
+});
 
 
 
 
   }])
 
+
+
+
+  .controller('relatorioCtrl', ['$rootScope', '$scope', 'API', function($rootScope, $scope, API) {
+    //
+  // Pie Chart Example
+  //
+  var pieSeries =4;
+  $scope.pieDataset = [ {
+      label: " Em Operação",
+      data: 44
+  },
+    {
+        label: " Finalizados",
+        data: 11
+    }, {
+        label: " Pendentes",
+        data: 22
+    }, {
+        label: " Concluidos",
+        data: 33
+    }];
+
+  $scope.pieOptions = {
+    series: {
+      pie: {
+        show: true
+      }
+    },grid: {
+  hoverable: true
+},
+        tooltip: true,
+        tooltipOpts: {
+            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+            shifts: {
+                x: 20,
+                y: 0
+            },
+            defaultTheme: true
+        }
+
+  };
+
+
+
+
+  }])
 
 
 

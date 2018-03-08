@@ -3,8 +3,7 @@ angular.module('services', [])
   .factory('API', ['$http', function($http, $httpProvider) {
     var baseUrl = "http://localhost:3000"; //"http://192.168.1.104:3300"
     $http.defaults.headers.common['x-access-token'] = JSON.parse(localStorage.getItem('ngStorage-token'));
-    $http.defaults.headers.common['user-role'] = JSON.parse(localStorage.getItem('ngStorage-user_role'));
-    var dataPushed=[];
+
     return {
 
       /// Status ///
@@ -57,7 +56,7 @@ angular.module('services', [])
       /// Transfere os dados para cadastro de uma unidade
       cadastroUnidade: function(data) {
       return  $http.post(baseUrl + '/cadastrarUnidade', data).then(function (response) {
-         return response.data;
+              return response.data;
             });
       },
       /// Transfere os dados para a edição de uma unidade
